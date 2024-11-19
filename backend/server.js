@@ -6,20 +6,18 @@ import cookieParser from "cookie-parser";
 import fs from "node:fs";
 import errorHandler from "./src/helpers/errorhandler.js";
 
-dotenv.config();
 
-const port = process.env.PORT || 8000;
+
+dotenv.config();
 
 const app = express();
 
-// middleware
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true,
-  })
-);
 app.use(express.json());
+
+app.use(cors());
+
+const port = process.env.PORT || 9090;
+
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 

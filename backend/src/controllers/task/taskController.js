@@ -33,7 +33,9 @@ export const createTask = asyncHandler(async (req, res) => {
 
 export const getTasks = asyncHandler(async (req, res) => {
   try {
-    const userId = req.user._id;
+    const {_id} = req.params
+    // const userId = req.user._id;
+    const userId = _id
 
     if (!userId) {
       res.status(400).json({ message: "User not found!" });

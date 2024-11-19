@@ -5,10 +5,12 @@ import toast from "react-hot-toast";
 
 const TasksContext = createContext();
 
-const serverUrl = "https://taskfyer.onrender.com/api/v1";
+// const serverUrl = "https://taskfyer.onrender.com/api/v1";
+const serverUrl = "http://localhost:9090"
 
 export const TasksProvider = ({ children }) => {
   const userId = useUserContext().user._id;
+  const userBody = useUserContext().user;
 
   const [tasks, setTasks] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -46,9 +48,19 @@ export const TasksProvider = ({ children }) => {
 
   // get tasks
   const getTasks = async () => {
+    const token =  JSON.parse(localStorage.getItem('token'));
+
     setLoading(true);
     try {
-      const response = await axios.get(`${serverUrl}/tasks`);
+      const response = await axios.get(
+        `${serverUrl}/tasks/${userId}`, 
+        {
+          headers:{"Authorization": `Bearer ${token}`},
+          // body: JSON.stringify(userBody)
+        },
+      );
+
+      // con.
 
       setTasks(response.data.tasks);
     } catch (error) {
@@ -59,9 +71,11 @@ export const TasksProvider = ({ children }) => {
 
   // get task
   const getTask = async (taskId) => {
+    const token =  JSON.parse(localStorage.getItem('token'));
+
     setLoading(true);
     try {
-      const response = await axios.get(`${serverUrl}/task/${taskId}`);
+      const response = await axios.get(`${serverUrl}/task/${taskId}`, {headers:{"Authorization": `Bearer ${token}`}});
 
       setTask(response.data);
     } catch (error) {
@@ -71,9 +85,11 @@ export const TasksProvider = ({ children }) => {
   };
 
   const createTask = async (task) => {
+    const token =  JSON.parse(localStorage.getItem('token'));
+
     setLoading(true);
     try {
-      const res = await axios.post(`${serverUrl}/task/create`, task);
+      const res = await axios.post(`${serverUrl}/task/create`, task, {headers:{"Authorization": `Bearer ${token}`}});
 
       console.log("Task created", res.data);
 
@@ -86,9 +102,11 @@ export const TasksProvider = ({ children }) => {
   };
 
   const updateTask = async (task) => {
+    const token =  JSON.parse(localStorage.getItem('token'));
+
     setLoading(true);
     try {
-      const res = await axios.patch(`${serverUrl}/task/${task._id}`, task);
+      const res = await axios.patch(`${serverUrl}/task/${task._id}`, task,  {headers:{"Authorization": `Bearer ${token}`}});
 
       // update the task in the tasks array
       const newTasks = tasks.map((tsk) => {
@@ -104,9 +122,11 @@ export const TasksProvider = ({ children }) => {
   };
 
   const deleteTask = async (taskId) => {
+    const token =  JSON.parse(localStorage.getItem('token'));
+
     setLoading(true);
     try {
-      await axios.delete(`${serverUrl}/task/${taskId}`);
+      await axios.delete(`${serverUrl}/task/${taskId}`, {headers:{"Authorization": `Bearer ${token}`}});
 
       // remove the task from the tasks array
       const newTasks = tasks.filter((tsk) => tsk._id !== taskId);
