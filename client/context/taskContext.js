@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 const TasksContext = createContext();
 
 // const serverUrl = "https://taskfyer.onrender.com/api/v1";
-const serverUrl = "http://localhost:9090"
+const serverUrl = "http://localhost:9090/api/v1"
 
 export const TasksProvider = ({ children }) => {
   const userId = useUserContext().user._id;
@@ -49,20 +49,22 @@ export const TasksProvider = ({ children }) => {
   // get tasks
   const getTasks = async () => {
     const token =  JSON.parse(localStorage.getItem('token'));
+    // console.log("get tasks token ",  token)
 
     setLoading(true);
     try {
-      const response = await axios.get(
+      const response = await fetch(
         `${serverUrl}/tasks/${userId}`, 
         {
-          headers:{"Authorization": `Bearer ${token}`},
-          // body: JSON.stringify(userBody)
+          method: "GET",
+          headers:{"Authorization": `Bearer ${token}`}
         },
       );
 
-      // con.
+      console.log("get tasks response ", response.data.tasks)
+      const tasks = await response.json()
 
-      setTasks(response.data.tasks);
+      setTasks(tasks);
     } catch (error) {
       console.log("Error getting tasks", error);
     }

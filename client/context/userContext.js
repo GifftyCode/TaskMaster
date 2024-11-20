@@ -71,7 +71,7 @@ export const UserContextProvider = ({ children }) => {
         // }
       );
 
-      console.log('res ', res.data)
+      // console.log('res ', res.data)
       // return
       localStorage.setItem('token', JSON.stringify(res.data.token));
 
@@ -149,7 +149,7 @@ export const UserContextProvider = ({ children }) => {
   // get user details
   const getUser = async () => {
     const token =  JSON.parse(localStorage.getItem('token'));
-    console.log("token ", token)
+    // console.log("token ", token)
 
     setLoading(true);
     try {

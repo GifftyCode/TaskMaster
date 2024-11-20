@@ -32,16 +32,19 @@ export const createTask = asyncHandler(async (req, res) => {
 });
 
 export const getTasks = asyncHandler(async (req, res) => {
+  console.log("get tasks run")
   try {
-    const {_id} = req.params
+    const {id} = req.params
     // const userId = req.user._id;
-    const userId = _id
+    const userId = id
+    console.log("user id ", userId)
 
     if (!userId) {
       res.status(400).json({ message: "User not found!" });
     }
 
     const tasks = await TaskModel.find({ user: userId });
+    console.log("tasks ", tasks)
 
     res.status(200).json({
       length: tasks.length,
