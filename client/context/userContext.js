@@ -166,12 +166,12 @@ export const UserContextProvider = ({ children }) => {
       }
     );
 
-      // setUser((prevState) => {
-      //   return {
-      //     ...prevState,
-      //     ...res.data,
-      //   };
-      // });
+      setUser((prevState) => {
+        return {
+          ...prevState,
+          ...res.data,
+        };
+      });
 
       // setUser({...res.data})
 

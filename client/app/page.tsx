@@ -11,13 +11,13 @@ import { container, item } from "@/utils/animations";
 import { useUserContext } from "@/context/userContext";
 
 export default function Home() {
-  // const token:any = JSON.parse(localStorage.getItem('token'));
-
-  // if(!token) {
-  //   useRedirect("/login");
-  // }
+  const token:any = localStorage.getItem('token') || null;
 
   const { user } = useUserContext();
+
+  if(!token || Object.keys(user).length === 0) {
+    useRedirect("/login");
+  }
 
   const { tasks, openModalForAdd, priority, setPriority } = useTasks();
 
@@ -27,7 +27,7 @@ export default function Home() {
     setPriority("all");
   }, []);
 
-  console.log("user ", user)
+  // console.log("user ", user)
 
   return (
     <main className="m-6 h-full">
