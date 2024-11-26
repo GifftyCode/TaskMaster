@@ -11,6 +11,10 @@ import { container, item } from "@/utils/animations";
 import { useUserContext } from "@/context/userContext";
 
 export default function Home() {
+
+  // if(typeof window !== undefined) {
+
+  // }
   const token:any = localStorage.getItem('token') || null;
 
   const { user } = useUserContext();
@@ -22,6 +26,8 @@ export default function Home() {
   const { tasks, openModalForAdd, priority, setPriority } = useTasks();
 
   const filtered = filteredTasks(tasks, priority);
+
+  const micChec
 
   useEffect(() => {
     setPriority("all");
