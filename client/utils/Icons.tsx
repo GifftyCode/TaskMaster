@@ -11,3 +11,8 @@ export const badge = <i className="fa-solid fa-certificate"></i>;
 export const mail = <i className="fa-regular fa-envelope"></i>;
 export const profile = <i className="fa-solid fa-user"></i>;
 export const home = <i className="fas fa-home"></i>;
+export const linkedln = <i className="fa fa-linkedin" aria-hidden="true"></i>;
+export const twitter = <i className="fa fa-twitter" aria-hidden="true"></i>;
+
+
+
