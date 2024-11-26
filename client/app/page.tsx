@@ -5,30 +5,33 @@ import Filters from "./Components/Filters/Filters";
 import TaskItem from "./Components/TaskItem/TaskItem";
 import { Task } from "@/utils/types";
 import { filteredTasks } from "@/utils/utilities";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { container, item } from "@/utils/animations";
 import { useUserContext } from "@/context/userContext";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const navigator = useRouter()
+  const [accessToken, setAccessToken] = useState<any>("")
+
+  const { user } = useUserContext();
+
+  if(!accessToken || Object.keys(user).length === 0) {
+    // useRedirect("/login");
+    navigator.push("/login")
+  }
 
   const { tasks, openModalForAdd, priority, setPriority } = useTasks();
 
   const filtered = filteredTasks(tasks, priority);
 
-  const micCheck = () => {
-    const token:any = localStorage.getItem('token') || null;
-
-    const { user } = useUserContext();
-  
-    if(!token || Object.keys(user).length === 0) {
-      useRedirect("/login");
-    }
-  }
 
   useEffect(() => {
     if(typeof window !== undefined) {
-      micCheck()
+      const token:any = localStorage.getItem('token') || null;
+  
+      setAccessToken(token)
     }
     setPriority("all");
   }, []);
