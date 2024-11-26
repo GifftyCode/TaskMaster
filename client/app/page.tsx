@@ -9,18 +9,10 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { container, item } from "@/utils/animations";
 import { useUserContext } from "@/context/userContext";
-import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const navigator = useRouter()
-  const [accessToken, setAccessToken] = useState<any>("")
 
-  const { user } = useUserContext();
-
-  if(!accessToken || Object.keys(user).length === 0) {
-    // useRedirect("/login");
-    navigator.push("/login")
-  }
+  useRedirect("/login");
 
   const { tasks, openModalForAdd, priority, setPriority } = useTasks();
 
@@ -28,11 +20,6 @@ export default function Home() {
 
 
   useEffect(() => {
-    if(typeof window !== undefined) {
-      const token:any = localStorage.getItem('token') || null;
-  
-      setAccessToken(token)
-    }
     setPriority("all");
   }, []);
 
