@@ -133,6 +133,8 @@ export const TasksProvider = ({ children }) => {
       // remove the task from the tasks array
       const newTasks = tasks.filter((tsk) => tsk._id !== taskId);
 
+      toast.success("Task deleted successfully");
+
       setTasks(newTasks);
     } catch (error) {
       console.log("Error deleting task", error);

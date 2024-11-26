@@ -80,6 +80,7 @@ function ProfileModal() {
             updateUser(e, {
               name: userState.name,
               email: userState.email,
+              password: userState.password
             });
           }}
         >

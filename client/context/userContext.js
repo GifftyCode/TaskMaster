@@ -150,7 +150,7 @@ export const UserContextProvider = ({ children }) => {
   const getUser = async () => {
     const token =  JSON.parse(localStorage.getItem('token'));
     // console.log("token ", token)
-
+// 
     setLoading(true);
     try {
       const res = await fetch(
@@ -190,11 +190,17 @@ export const UserContextProvider = ({ children }) => {
     e.preventDefault();
     setLoading(true);
 
+    const token =  JSON.parse(localStorage.getItem('token'));
+
     try {
-      const res = await axios.patch(`${serverUrl}/api/v1/user`, data
-      //   , {
-      //   withCredentials: true, // send cookies to the server
-      // }
+      const res = await axios.patch(
+        `${serverUrl}/api/v1/user`, 
+        data,
+        {
+          headers:{
+            "Authorization": `Bearer ${token}`
+          }
+        }
     );
 
       // update the user state
@@ -321,14 +327,20 @@ export const UserContextProvider = ({ children }) => {
   const changePassword = async (currentPassword, newPassword) => {
     setLoading(true);
 
+
+    const token =  JSON.parse(localStorage.getItem('token'));
+
+   
+
     try {
       const res = await axios.patch(
         `${serverUrl}/api/v1/change-password`,
-        { currentPassword, newPassword }
-        // ,
-        // {
-        //   withCredentials: true, // send cookies to the server
-        // }
+        { currentPassword, newPassword },
+        {
+          headers:{
+            "Authorization": `Bearer ${token}`
+          }
+        }
       );
 
       toast.success("Password changed successfully");
