@@ -12,24 +12,24 @@ import { useUserContext } from "@/context/userContext";
 
 export default function Home() {
 
-  // if(typeof window !== undefined) {
-
-  // }
-  const token:any = localStorage.getItem('token') || null;
-
-  const { user } = useUserContext();
-
-  if(!token || Object.keys(user).length === 0) {
-    useRedirect("/login");
-  }
-
   const { tasks, openModalForAdd, priority, setPriority } = useTasks();
 
   const filtered = filteredTasks(tasks, priority);
 
-  const micChec
+  const micCheck = () => {
+    const token:any = localStorage.getItem('token') || null;
+
+    const { user } = useUserContext();
+  
+    if(!token || Object.keys(user).length === 0) {
+      useRedirect("/login");
+    }
+  }
 
   useEffect(() => {
+    if(typeof window !== undefined) {
+      micCheck()
+    }
     setPriority("all");
   }, []);
 
